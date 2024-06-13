@@ -5,8 +5,11 @@ import com.github.ricardobaumann.vehiclemanager.entities.Brand;
 import com.github.ricardobaumann.vehiclemanager.repos.BrandRepo;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,4 +25,15 @@ public class BrandService {
         return brandRepo.save(brand);
     }
 
+    public Optional<Brand> getById(UUID id) {
+        return brandRepo.findById(id);
+    }
+
+    public Page<Brand> list(Pageable pageable) {
+        return brandRepo.findAll(pageable);
+    }
+
+    public void delete(UUID id) {
+        brandRepo.deleteById(id);
+    }
 }

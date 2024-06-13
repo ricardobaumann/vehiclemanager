@@ -3,6 +3,7 @@ package com.github.ricardobaumann.vehiclemanager.controllers;
 import com.github.ricardobaumann.vehiclemanager.TestcontainersConfiguration;
 import com.github.ricardobaumann.vehiclemanager.entities.Brand;
 import com.github.ricardobaumann.vehiclemanager.repos.BrandRepo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,6 +30,11 @@ class BrandControllerCreateTest {
 
     @Autowired
     private BrandRepo brandRepo;
+
+    @BeforeEach
+    void setUp() {
+        brandRepo.deleteAll();
+    }
 
     @Test
     void shouldReturnCreatedOnValidBrand() throws Exception {

@@ -1,16 +1,12 @@
 package com.github.ricardobaumann.vehiclemanager.controllers;
 
-import com.github.ricardobaumann.vehiclemanager.TestcontainersConfiguration;
+import com.github.ricardobaumann.vehiclemanager.IntegrationTest;
 import com.github.ricardobaumann.vehiclemanager.entities.Brand;
 import com.github.ricardobaumann.vehiclemanager.repos.BrandRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
@@ -19,10 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import(TestcontainersConfiguration.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-@Commit
+@IntegrationTest
 class BrandControllerGetTest {
     @Autowired
     private MockMvc mockMvc;

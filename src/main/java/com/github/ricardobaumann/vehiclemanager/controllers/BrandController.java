@@ -25,7 +25,6 @@ public class BrandController {
     private final BrandService brandService;
     private final BrandMapper brandMapper;
 
-
     @PostMapping
     @SneakyThrows
     public ResponseEntity<Void> create(@RequestBody @Valid CreateBrandCommand createBrandCommand) {
@@ -35,6 +34,13 @@ public class BrandController {
                         .path("/v1/brands/")
                         .path(brand.getId().toString()).build()
                         .toUri()).build();
+    }
+
+    @PutMapping("/{id}")
+    public void put(
+            @PathVariable UUID id,
+            @RequestBody @Valid CreateBrandCommand createBrandCommand) {
+        brandService.update(id, createBrandCommand);
     }
 
     @GetMapping("/{id}")

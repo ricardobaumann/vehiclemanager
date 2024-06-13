@@ -2,6 +2,8 @@ package com.github.ricardobaumann.vehiclemanager.services;
 
 import com.github.ricardobaumann.vehiclemanager.dtos.input.CreateBrandCommand;
 import com.github.ricardobaumann.vehiclemanager.entities.Brand;
+import com.github.ricardobaumann.vehiclemanager.exceptions.ResourceNotFoundException;
+import com.github.ricardobaumann.vehiclemanager.mappers.BrandMapper;
 import com.github.ricardobaumann.vehiclemanager.repos.BrandRepo;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BrandService {
     private final BrandRepo brandRepo;
+    private final BrandMapper brandMapper;
 
     public Brand create(CreateBrandCommand createBrandCommand) {
         Brand brand = new Brand();
@@ -35,5 +38,13 @@ public class BrandService {
 
     public void delete(UUID id) {
         brandRepo.deleteById(id);
+    }
+
+    public void update(UUID id, CreateBrandCommand createBrandCommand) {
+        brandRepo.findById(id)
+                .map(brand -> brandMapper.partialUpdate(brand, createBrandCommand))
+                .ifPresentOrElse(brandRepo::save, () -> {
+                    throw new ResourceNotFoundException();
+                });
     }
 }

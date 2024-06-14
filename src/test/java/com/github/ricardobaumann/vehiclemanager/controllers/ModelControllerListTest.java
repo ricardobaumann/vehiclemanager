@@ -23,6 +23,7 @@ class ModelControllerListTest {
 
     @Test
     void shouldListModels() throws Exception {
+        testObjects.cleanUp();
         Model model = testObjects.createTestModel();
 
         mockMvc.perform(get("/v1/models")

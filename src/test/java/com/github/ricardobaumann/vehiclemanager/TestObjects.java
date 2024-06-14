@@ -24,4 +24,8 @@ public class TestObjects {
         return modelRepo.save(new Model(UUID.randomUUID(), brand, "testing", new BigDecimal("100.99")));
     }
 
+    public void cleanUp() {
+        modelRepo.deleteAll();
+        brandRepo.deleteAll();
+    }
 }

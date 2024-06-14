@@ -24,6 +24,7 @@ class ModelControllerDeleteTest {
 
     @Test
     void shouldDeleteExistentModel() throws Exception {
+        testObjects.cleanUp();
         Model model = testObjects.createTestModel();
 
         mockMvc.perform(delete("/v1/models/{id}", model.getId()))

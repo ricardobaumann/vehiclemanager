@@ -1,10 +1,12 @@
 package com.github.ricardobaumann.vehiclemanager.controllers;
 
 import com.github.ricardobaumann.vehiclemanager.IntegrationTest;
+import com.github.ricardobaumann.vehiclemanager.TestObjects;
 import com.github.ricardobaumann.vehiclemanager.entities.Brand;
 import com.github.ricardobaumann.vehiclemanager.entities.Model;
 import com.github.ricardobaumann.vehiclemanager.repos.BrandRepo;
 import com.github.ricardobaumann.vehiclemanager.repos.ModelRepo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,6 +28,13 @@ class ModelControllerCreateTest {
     private ModelRepo modelRepo;
     @Autowired
     private BrandRepo brandRepo;
+    @Autowired
+    private TestObjects testObjects;
+
+    @BeforeEach
+    void setup() {
+        testObjects.cleanUp();
+    }
 
     @Test
     void shouldCreateValidModel() throws Exception {

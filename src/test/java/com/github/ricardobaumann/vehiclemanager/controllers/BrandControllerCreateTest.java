@@ -1,6 +1,7 @@
 package com.github.ricardobaumann.vehiclemanager.controllers;
 
 import com.github.ricardobaumann.vehiclemanager.IntegrationTest;
+import com.github.ricardobaumann.vehiclemanager.TestObjects;
 import com.github.ricardobaumann.vehiclemanager.entities.Brand;
 import com.github.ricardobaumann.vehiclemanager.repos.BrandRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,13 +21,14 @@ class BrandControllerCreateTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private BrandRepo brandRepo;
+    @Autowired
+    private TestObjects testObjects;
 
     @BeforeEach
     void setUp() {
-        brandRepo.deleteAll();
+        testObjects.cleanUp();
     }
 
     @Test

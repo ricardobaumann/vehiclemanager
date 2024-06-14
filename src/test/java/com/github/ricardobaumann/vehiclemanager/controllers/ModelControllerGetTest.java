@@ -27,6 +27,7 @@ class ModelControllerGetTest {
 
     @Test
     void shouldReturnExistentModel() throws Exception {
+        testObjects.cleanUp();
         Model model = testObjects.createTestModel();
 
         mockMvc.perform(get("/v1/models/{id}", model.getId())

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="create-model-table" author="ricardo">
+        <createTable tableName="models">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="brand_id" type="uuid">
+                <constraints foreignKeyName="fk_model_brand"
+                             initiallyDeferred="true"
+                             referencedTableName="brands"
+                             referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="decimal(13,3)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="models" indexName="idx_model_brand">
+            <column name="brand_id"/>
+        </createIndex>
+        <createIndex tableName="models"
+                     indexName="uk_model_brand_name"
+                     unique="true">
+            <column name="name"/>
+            <column name="brand_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

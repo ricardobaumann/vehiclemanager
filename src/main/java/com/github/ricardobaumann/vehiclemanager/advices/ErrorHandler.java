@@ -1,6 +1,7 @@
 package com.github.ricardobaumann.vehiclemanager.advices;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
@@ -23,19 +24,27 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @AllArgsConstructor
 public class ErrorHandler {
     private final Map<String, String> dbKeyMap = Map.of(
-            "brands_name_key", "Duplicated brand name"
+            "brands_name_key", "Duplicated brand name",
+            "uk_model_brand_name", "Duplicated model"
     );
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public Error dbConstraintError(DataIntegrityViolationException exception) {
         if (exception.getCause() instanceof ConstraintViolationException constraintViolationException) {
+            log.info("Handling constraint name: {}", constraintViolationException.getConstraintName());
             return new Error(BAD_REQUEST.value(),
                     dbKeyMap.getOrDefault(
                             constraintViolationException.getConstraintName(), "Unknown constraint error"),
                     null);
         }
         return new Error(BAD_REQUEST.value(), "Unknown constraint error", null);
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public Error entityNotFoundException(EntityNotFoundException entityNotFoundException) {
+        return new Error(BAD_REQUEST.value(), entityNotFoundException.getMessage(), null);
     }
 
     @ResponseStatus(BAD_REQUEST)

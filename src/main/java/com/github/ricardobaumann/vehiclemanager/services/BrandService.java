@@ -5,8 +5,10 @@ import com.github.ricardobaumann.vehiclemanager.entities.Brand;
 import com.github.ricardobaumann.vehiclemanager.exceptions.ResourceNotFoundException;
 import com.github.ricardobaumann.vehiclemanager.mappers.BrandMapper;
 import com.github.ricardobaumann.vehiclemanager.repos.BrandRepo;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.mapstruct.Named;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,11 @@ public class BrandService {
 
     public Optional<Brand> getById(UUID id) {
         return brandRepo.findById(id);
+    }
+
+    @Named("getByIdOrFail")
+    public Brand getByIdOrFail(UUID id) {
+        return getById(id).orElseThrow(() -> new EntityNotFoundException("Brand not found"));
     }
 
     public Page<Brand> list(Pageable pageable) {

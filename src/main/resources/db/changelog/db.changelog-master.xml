@@ -6,4 +6,5 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <include file="db/changelog/changes/create-brand-table.xml"/>
+    <include file="db/changelog/changes/create-model-table.xml"/>
 </databaseChangeLog>

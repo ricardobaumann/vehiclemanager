@@ -8,7 +8,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface BrandMapper {
     BrandResult map(Brand brand);
-
+    
     @Mapping(target = "id", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Brand partialUpdate(@MappingTarget Brand brand, CreateBrandCommand createBrandCommand);

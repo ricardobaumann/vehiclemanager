@@ -28,6 +28,11 @@ public class ErrorHandler {
             "uk_model_brand_name", "Duplicated model"
     );
 
+    private final Map<String, String> dbFkMap = Map.of(
+            "fk_vehicle_model", "The model is still linked to a vehicle",
+            "fk_model_brand", "The brand is still linked to a model"
+    );
+
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public Error dbConstraintError(DataIntegrityViolationException exception) {
@@ -38,7 +43,12 @@ public class ErrorHandler {
                             constraintViolationException.getConstraintName(), "Unknown constraint error"),
                     null);
         }
-        return new Error(BAD_REQUEST.value(), "Unknown constraint error", null);
+        String message = exception.getCause().getMessage();
+        log.info("Handling message: {}", message);
+        return dbFkMap.entrySet().stream()
+                .filter(entry -> message.contains(entry.getKey())).map(Map.Entry::getValue)
+                .map(description -> new Error(BAD_REQUEST.value(), description, null))
+                .findAny().orElseGet(() -> new Error(BAD_REQUEST.value(), "Unknown constraint error", null));
     }
 
     @ResponseStatus(BAD_REQUEST)

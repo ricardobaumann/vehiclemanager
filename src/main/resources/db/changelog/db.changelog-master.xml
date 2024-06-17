@@ -7,4 +7,5 @@
 
     <include file="db/changelog/changes/create-brand-table.xml"/>
     <include file="db/changelog/changes/create-model-table.xml"/>
+    <include file="db/changelog/changes/create-vehicle-table.xml"/>
 </databaseChangeLog>

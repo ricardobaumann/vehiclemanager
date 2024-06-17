@@ -1,6 +1,6 @@
 package com.github.ricardobaumann.vehiclemanager.repos;
 
-import com.github.ricardobaumann.vehiclemanager.entities.Model;
+import com.github.ricardobaumann.vehiclemanager.entities.Vehicle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -12,17 +12,19 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ModelRepo extends CrudRepository<Model, UUID>, PagingAndSortingRepository<Model, UUID> {
+public interface VehicleRepo extends CrudRepository<Vehicle, UUID>,
+        PagingAndSortingRepository<Vehicle, UUID> {
     @Query("""
-            select m from Model m
-                join fetch m.brand
-            where m.id = :id
+            select v from Vehicle v
+                join fetch v.model m
+                    join fetch m.brand
+            where v.id = :id
             """)
-    Optional<Model> findFullById(UUID id);
+    Optional<Vehicle> findFullByID(UUID id);
 
     @Query("""
-            select m from Model m
-                join fetch m.brand
+            select v from Vehicle v
+                join fetch v.model
             """)
-    Page<Model> findAllFull(Pageable pageable);
+    Page<Vehicle> findWithModel(Pageable pageable);
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="create-vehicle-table" author="ricardo">
+        <createTable tableName="vehicles">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="model_id" type="uuid">
+                <constraints foreignKeyName="fk_vehicle_model"
+                             initiallyDeferred="true"
+                             referencedTableName="models"
+                             referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="year" type="smallint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fuel_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="doors_amount" type="smallint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="color" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <createIndex tableName="vehicles" indexName="idx_vehicle_model">
+            <column name="model_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

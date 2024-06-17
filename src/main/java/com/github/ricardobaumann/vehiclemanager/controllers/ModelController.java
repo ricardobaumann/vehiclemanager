@@ -26,7 +26,7 @@ public class ModelController {
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid CreateModelCommand createModelCommand) {
         Model model = modelService.create(createModelCommand);
-        return resourceMapper.fromId(model.getId());
+        return resourceMapper.createdFrom(model.getId());
     }
 
     @PutMapping("/{id}")

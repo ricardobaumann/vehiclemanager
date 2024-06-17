@@ -9,7 +9,7 @@ import java.util.UUID;
 @Component
 public class ResourceMapper {
 
-    public ResponseEntity<Void> fromId(UUID id) {
+    public ResponseEntity<Void> createdFrom(UUID id) {
         return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .path(id.toString()).build()

@@ -34,3 +34,10 @@ docker-compose up
 
 Your application SWAGGER docs will be available on
 http://localhost:8080/swagger-ui/
+
+## Test coverage
+
+Since the resources do not contain business logic apart from static validations and database constraints, I decided to
+cover it all with integration tests.
+It allows me to fully cover all the scenarios in a safe and productive way. The test setup includes docker-compose and
+test containers, which are gracefully integrated with Spring Boot. 

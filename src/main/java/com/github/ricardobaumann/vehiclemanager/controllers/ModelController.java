@@ -3,8 +3,8 @@ package com.github.ricardobaumann.vehiclemanager.controllers;
 import com.github.ricardobaumann.vehiclemanager.dtos.input.CreateModelCommand;
 import com.github.ricardobaumann.vehiclemanager.dtos.output.ModelResult;
 import com.github.ricardobaumann.vehiclemanager.entities.Model;
-import com.github.ricardobaumann.vehiclemanager.mappers.ModelMapper;
 import com.github.ricardobaumann.vehiclemanager.mappers.ResourceMapper;
+import com.github.ricardobaumann.vehiclemanager.mappers.VehicleModelMapper;
 import com.github.ricardobaumann.vehiclemanager.services.ModelService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.UUID;
 public class ModelController {
     private final ModelService modelService;
     private final ResourceMapper resourceMapper;
-    private final ModelMapper modelMapper;
+    private final VehicleModelMapper vehicleModelMapper;
 
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid CreateModelCommand createModelCommand) {
@@ -38,14 +38,14 @@ public class ModelController {
     @GetMapping("/{id}")
     public ResponseEntity<ModelResult> get(@PathVariable UUID id) {
         return modelService.getByID(id)
-                .map(modelMapper::map)
+                .map(vehicleModelMapper::map)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
     public Page<ModelResult> list(Pageable pageable) {
-        return modelService.list(pageable).map(modelMapper::map);
+        return modelService.list(pageable).map(vehicleModelMapper::map);
     }
 
     @DeleteMapping("/{id}")

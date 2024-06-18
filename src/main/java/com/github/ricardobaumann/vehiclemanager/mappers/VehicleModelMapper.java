@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", uses = {BrandMapper.class, BrandService.class})
-public interface ModelMapper {
+public interface VehicleModelMapper {
     ModelResult map(Model model);
 
     @Mapping(target = "brand", qualifiedByName = "getByIdOrFail", source = "brandId")
